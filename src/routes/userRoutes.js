@@ -1,12 +1,18 @@
 import { Router } from 'express';
 import userController from '../controllers/UserController';
+import loginRequired from '../middlewares/loginRequired';
 
 const router = new Router();
 
-router.post('/', userController.store);
+// nao existiriam em um sistema real
 router.get('/', userController.index);
 router.get('/:id', userController.show);
-router.put('/:id', userController.update);
-router.delete('/:id', userController.delete);
+
+// existiriam
+router.post('/', userController.store);
+router.put('/', loginRequired, userController.update);
+
+// delete em um sistema real seria algo mascarado pra nao apagar o dado do BD de verdade
+router.delete('/:id', loginRequired, userController.delete);
 
 export default router;
