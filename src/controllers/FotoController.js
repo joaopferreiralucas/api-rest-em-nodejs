@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import multer from 'multer';
 import multerConfig from '../config/multerConfig';
 
@@ -14,13 +15,17 @@ class FotoController {
         });
       }
 
-      const { originalname, filename } = req.file;
-      // eslint-disable-next-line camelcase
-      const { aluno_id } = req.body;
-      // eslint-disable-next-line camelcase
-      const foto = await Foto.create({ originalname, filename, aluno_id });
+      try {
+        const { originalname, filename } = req.file;
+        const { aluno_id } = req.body;
+        const foto = await Foto.create({ originalname, filename, aluno_id });
 
-      return res.json(foto);
+        return res.json(foto);
+      } catch (e) {
+        return res.status(400).json({
+          errors: ['Aluno nao existe'],
+        });
+      }
     });
   }
 }
