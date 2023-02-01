@@ -15,6 +15,7 @@ import fotosRoutes from './routes/fotoRoutes';
 
 const whitelist = [
   'http://localhost:3000',
+  'http://localhost:3006',
 ];
 
 const corsOptions = {
@@ -37,9 +38,10 @@ class App {
   middlewares() {
     this.app.use(cors(corsOptions));
     this.app.use(helmet());
+    this.app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
-    this.app.use(express.static(resolve(__dirname, 'uploads')));
+    this.app.use('/images/', express.static(resolve(__dirname, '..', 'uploads', 'images')));
   }
 
   routes() {

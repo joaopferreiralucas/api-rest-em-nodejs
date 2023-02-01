@@ -71,7 +71,7 @@ class AlunoController {
 
   async update(req, res) {
     try {
-      const aluno = await Aluno.findByPk(req.alunoId);
+      const aluno = await Aluno.findByPk(req.params.id);
 
       if (!aluno) {
         return res.status(400).json({
